@@ -5,6 +5,7 @@ const mongoose = require( "mongoose");
 const session = require( "express-session");
 const passport = require('passport');
 const passportLocalMongoose = require('passport-local-mongoose');
+const mongoStore = require('connect-mongo');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const findOrCreate = require('mongoose-findorcreate');
 const app = express();
@@ -16,7 +17,10 @@ app.use(express.static('public'));
 app.use(session({
     secret: process.env.SECRET,
     resave: false,
-    saveUninitialized: false
+    saveUninitialized: false,
+    store: mongoStore.create({
+        mongoUrl: 'mongodb+srv://admin-femi:oluwafemi@cluster0.ulvxftn.mongodb.net/userDB'
+    })
 }));
 
 app.use(passport.initialize());
